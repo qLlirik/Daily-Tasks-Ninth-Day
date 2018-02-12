@@ -1,0 +1,81 @@
+﻿<Window x:Class="NinthDay.Windows.AddNewTaxpayerWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:NinthDay.Windows"
+        mc:Ignorable="d"
+        Title="Налоговая инспецкия - Добавление нового налогоплательщика" Height="600" Width="800" FontSize="16" Background="LightGray" WindowStartupLocation="CenterScreen">
+    <Grid>
+        <Button Click="click_Back" Content="Назад" Width="100" Height="30" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="5"/>
+        <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+            <StackPanel HorizontalAlignment="Center" Orientation="Horizontal" Margin="5">
+                <TextBlock Text="Идентификационный номер(ИНН): "/>
+                <TextBox x:Name="tbxINN" Text="{Binding Path=INN}" Width="250" MaxLength="13"/>
+            </StackPanel>
+
+            <StackPanel HorizontalAlignment="Right" Orientation="Horizontal" Margin="5">
+                <TextBlock Text="                     ФИО: "/>
+                <TextBox x:Name="tbxFIO" Width="250" MaxLength="62"/>
+            </StackPanel>
+
+            <StackPanel HorizontalAlignment="Right" Orientation="Horizontal" Margin="5">
+                <TextBlock Text="Документ, удост-й личность "/>
+                <TextBox x:Name="tbxDocument" Text="{Binding Path=Document}" Width="250" MaxLength="80"/>
+            </StackPanel>
+
+            <StackPanel HorizontalAlignment="Right" Orientation="Horizontal" Margin="5">
+                <TextBlock Text="Серия: "/>
+                <TextBox x:Name="tbxSerial" Text="{Binding Path=Serial}" Width="250" MaxLength="10"/>
+            </StackPanel>
+
+            <StackPanel HorizontalAlignment="Right" Orientation="Horizontal" Margin="5">
+                <TextBlock Text="Номер: "/>
+                <TextBox x:Name="tbxNumber" Text="{Binding Path=Number}" Width="250" MaxLength="20"/>
+            </StackPanel>
+
+            <StackPanel HorizontalAlignment="Right" Orientation="Horizontal" Margin="5">
+                <TextBlock Text="Дата выдачи: " VerticalAlignment="Center"/>
+                <DatePicker x:Name="dpDate" Width="250" SelectedDate="{Binding Path=Date}"/>
+            </StackPanel>
+
+            <StackPanel HorizontalAlignment="Right" Orientation="Horizontal" Margin="5">
+                <TextBlock Text="Кем выдан: "/>
+                <TextBox x:Name="tbxRegion" Text="{Binding Path=Region}" Width="250" MaxLength="30"/>
+            </StackPanel>
+
+            <StackPanel HorizontalAlignment="Right" Orientation="Horizontal" Margin="5">
+                <TextBlock Text="Дата рождения: " VerticalAlignment="Center"/>
+                <DatePicker x:Name="dpBorn" Width="250" SelectedDate="{Binding Path=Born}"/>
+            </StackPanel>
+
+            <StackPanel HorizontalAlignment="Right" Orientation="Horizontal" Margin="5">
+                <TextBlock Text="Фото: "/>
+                <TextBox x:Name="tbxPath" Width="250"/>
+                <Button Click="click_SelectImage" Content="Выбрать" Margin="10 0 0 0"/>
+            </StackPanel>
+
+            <StackPanel HorizontalAlignment="Right" Orientation="Horizontal" Margin="5">
+                <TextBlock Text="Адресс: "/>
+                <TextBox x:Name="tbxAddress" Text="{Binding Path=Address}" Width="250" MaxLength="80"/>
+            </StackPanel>
+
+            <StackPanel HorizontalAlignment="Right" Orientation="Horizontal" Margin="5">
+                <TextBlock Text="Район: "/>
+                <TextBox x:Name="tbxDistrict" Text="{Binding Path=District}" Width="250" MaxLength="20"/>
+            </StackPanel>
+
+            <StackPanel HorizontalAlignment="Right" Orientation="Horizontal" Margin="5">
+                <TextBlock Text="Учётная инспекция: "/>
+                <TextBox x:Name="tbxDistrictTax" Text="{Binding Path=DistrictTax}" Width="250" MaxLength="20"/>
+            </StackPanel>
+
+            <StackPanel HorizontalAlignment="Right" Orientation="Horizontal" Margin="5">
+                <TextBlock Text="Номер налоговой службы: "/>
+                <TextBox x:Name="tbxTaxNumber" Text="{Binding Path=TaxNumber}" Width="250" MaxLength="4"/>
+            </StackPanel>
+            
+            <Button Click="click_Add" Content="Добавить" Margin="10"/>
+        </StackPanel>
+    </Grid>
+</Window>

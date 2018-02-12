@@ -1,0 +1,300 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="Хранилище Model" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Enterprises">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="40" Nullable="false" />
+          <Property Name="INN" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="Address" Type="varchar" MaxLength="30" Nullable="false" />
+          <Property Name="Chief" Type="varchar" MaxLength="60" Nullable="false" />
+          <Property Name="Phone" Type="varchar" MaxLength="10" Nullable="false" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="principal_id" Type="int" Nullable="false" />
+          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="version" Type="int" />
+          <Property Name="definition" Type="varbinary(max)" />
+        </EntityType>
+        <EntityType Name="Taxpayers">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="INN" Type="varchar" MaxLength="13" Nullable="false" />
+          <Property Name="LastName" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="FirstName" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="Patronymic" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="Document" Type="varchar" MaxLength="80" Nullable="false" />
+          <Property Name="Serial" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="Number" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="Date" Type="datetime" Nullable="false" />
+          <Property Name="Region" Type="varchar" MaxLength="30" Nullable="false" />
+          <Property Name="Born" Type="date" Nullable="false" />
+          <Property Name="Picture" Type="image" Nullable="false" />
+          <Property Name="Address" Type="varchar" MaxLength="80" Nullable="false" />
+          <Property Name="District" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="DistrictTax" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="TaxNumber" Type="varchar" MaxLength="4" Nullable="false" />
+        </EntityType>
+        <EntityType Name="TaxPayment">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TaxpayerID" Type="int" Nullable="false" />
+          <Property Name="EnterpriseID" Type="int" Nullable="false" />
+          <Property Name="DateTax" Type="datetime" Nullable="false" />
+          <Property Name="NumberTax" Type="varchar" MaxLength="4" Nullable="false" />
+          <Property Name="SumAll" Type="decimal" Precision="15" Scale="2" Nullable="false" />
+          <Property Name="SumTax" Type="decimal" Precision="15" Scale="2" Nullable="false" />
+          <Property Name="SumPension" Type="decimal" Precision="15" Scale="2" Nullable="false" />
+          <Property Name="ExempType" Type="varchar" MaxLength="60" Nullable="false" />
+          <Property Name="Exemp" Type="decimal" Precision="15" Scale="2" Nullable="false" />
+          <Property Name="Comment" Type="varchar(max)" />
+        </EntityType>
+        <Association Name="FK_TaxPayment_Enterprises">
+          <End Role="Enterprises" Type="Self.Enterprises" Multiplicity="1" />
+          <End Role="TaxPayment" Type="Self.TaxPayment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Enterprises">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="TaxPayment">
+              <PropertyRef Name="EnterpriseID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TaxPayment_Taxpayers">
+          <End Role="Taxpayers" Type="Self.Taxpayers" Multiplicity="1" />
+          <End Role="TaxPayment" Type="Self.TaxPayment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Taxpayers">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="TaxPayment">
+              <PropertyRef Name="TaxpayerID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Хранилище ModelContainer">
+          <EntitySet Name="Enterprises" EntityType="Self.Enterprises" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Taxpayers" EntityType="Self.Taxpayers" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TaxPayment" EntityType="Self.TaxPayment" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_TaxPayment_Enterprises" Association="Self.FK_TaxPayment_Enterprises">
+            <End Role="Enterprises" EntitySet="Enterprises" />
+            <End Role="TaxPayment" EntitySet="TaxPayment" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TaxPayment_Taxpayers" Association="Self.FK_TaxPayment_Taxpayers">
+            <End Role="Taxpayers" EntitySet="Taxpayers" />
+            <End Role="TaxPayment" EntitySet="TaxPayment" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Enterprises">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="40" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="INN" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Address" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Chief" Type="String" MaxLength="60" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Phone" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="TaxPayment" Relationship="Self.FK_TaxPayment_Enterprises" FromRole="Enterprises" ToRole="TaxPayment" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="Taxpayers">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="INN" Type="String" MaxLength="13" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="LastName" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="FirstName" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Patronymic" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Document" Type="String" MaxLength="80" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Serial" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Number" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Date" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Region" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Born" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="Picture" Type="Binary" MaxLength="Max" FixedLength="false" Nullable="false" />
+          <Property Name="Address" Type="String" MaxLength="80" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="District" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="DistrictTax" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="TaxNumber" Type="String" MaxLength="4" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="TaxPayment" Relationship="Self.FK_TaxPayment_Taxpayers" FromRole="Taxpayers" ToRole="TaxPayment" />
+        </EntityType>
+        <EntityType Name="TaxPayment">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TaxpayerID" Type="Int32" Nullable="false" />
+          <Property Name="EnterpriseID" Type="Int32" Nullable="false" />
+          <Property Name="DateTax" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="NumberTax" Type="String" MaxLength="4" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="SumAll" Type="Decimal" Precision="15" Scale="2" Nullable="false" />
+          <Property Name="SumTax" Type="Decimal" Precision="15" Scale="2" Nullable="false" />
+          <Property Name="SumPension" Type="Decimal" Precision="15" Scale="2" Nullable="false" />
+          <Property Name="ExempType" Type="String" MaxLength="60" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Exemp" Type="Decimal" Precision="15" Scale="2" Nullable="false" />
+          <Property Name="Comment" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Enterprises" Relationship="Self.FK_TaxPayment_Enterprises" FromRole="TaxPayment" ToRole="Enterprises" />
+          <NavigationProperty Name="Taxpayers" Relationship="Self.FK_TaxPayment_Taxpayers" FromRole="TaxPayment" ToRole="Taxpayers" />
+        </EntityType>
+        <Association Name="FK_TaxPayment_Enterprises">
+          <End Role="Enterprises" Type="Self.Enterprises" Multiplicity="1" />
+          <End Role="TaxPayment" Type="Self.TaxPayment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Enterprises">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="TaxPayment">
+              <PropertyRef Name="EnterpriseID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TaxPayment_Taxpayers">
+          <End Role="Taxpayers" Type="Self.Taxpayers" Multiplicity="1" />
+          <End Role="TaxPayment" Type="Self.TaxPayment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Taxpayers">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="TaxPayment">
+              <PropertyRef Name="TaxpayerID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Entity" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Enterprises" EntityType="Self.Enterprises" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
+          <EntitySet Name="Taxpayers" EntityType="Self.Taxpayers" />
+          <EntitySet Name="TaxPayment" EntityType="Self.TaxPayment" />
+          <AssociationSet Name="FK_TaxPayment_Enterprises" Association="Self.FK_TaxPayment_Enterprises">
+            <End Role="Enterprises" EntitySet="Enterprises" />
+            <End Role="TaxPayment" EntitySet="TaxPayment" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TaxPayment_Taxpayers" Association="Self.FK_TaxPayment_Taxpayers">
+            <End Role="Taxpayers" EntitySet="Taxpayers" />
+            <End Role="TaxPayment" EntitySet="TaxPayment" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="Хранилище ModelContainer" CdmEntityContainer="Entity">
+          <EntitySetMapping Name="Enterprises">
+            <EntityTypeMapping TypeName="Model.Enterprises">
+              <MappingFragment StoreEntitySet="Enterprises">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="INN" ColumnName="INN" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="Chief" ColumnName="Chief" />
+                <ScalarProperty Name="Phone" ColumnName="Phone" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="Model.sysdiagrams">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="definition" ColumnName="definition" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Taxpayers">
+            <EntityTypeMapping TypeName="Model.Taxpayers">
+              <MappingFragment StoreEntitySet="Taxpayers">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="INN" ColumnName="INN" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="Patronymic" ColumnName="Patronymic" />
+                <ScalarProperty Name="Document" ColumnName="Document" />
+                <ScalarProperty Name="Serial" ColumnName="Serial" />
+                <ScalarProperty Name="Number" ColumnName="Number" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="Region" ColumnName="Region" />
+                <ScalarProperty Name="Born" ColumnName="Born" />
+                <ScalarProperty Name="Picture" ColumnName="Picture" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="District" ColumnName="District" />
+                <ScalarProperty Name="DistrictTax" ColumnName="DistrictTax" />
+                <ScalarProperty Name="TaxNumber" ColumnName="TaxNumber" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TaxPayment">
+            <EntityTypeMapping TypeName="Model.TaxPayment">
+              <MappingFragment StoreEntitySet="TaxPayment">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="TaxpayerID" ColumnName="TaxpayerID" />
+                <ScalarProperty Name="EnterpriseID" ColumnName="EnterpriseID" />
+                <ScalarProperty Name="DateTax" ColumnName="DateTax" />
+                <ScalarProperty Name="NumberTax" ColumnName="NumberTax" />
+                <ScalarProperty Name="SumAll" ColumnName="SumAll" />
+                <ScalarProperty Name="SumTax" ColumnName="SumTax" />
+                <ScalarProperty Name="SumPension" ColumnName="SumPension" />
+                <ScalarProperty Name="ExempType" ColumnName="ExempType" />
+                <ScalarProperty Name="Exemp" ColumnName="Exemp" />
+                <ScalarProperty Name="Comment" ColumnName="Comment" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Нет" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
